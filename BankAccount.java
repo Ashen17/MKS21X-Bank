@@ -25,14 +25,26 @@ public class BankAccount{
 
 
   public boolean deposit(double amount){
-    if (amount >= 0){balance += amount;}
+    //System.out.println("depositing");
+    if (amount >= 0){
+      //System.out.println("deposited");
+      balance += amount;}
     return amount >= 0;
   }
 
   public boolean withdraw(double amount){
-    if (balance > amount){
-      balance -= amount;
+    boolean result = balance >= amount;
+    if (result){
+      //System.out.println("withdrawn");
+      balance -= amount;}
+    return result;
+  }
+
+  private boolean authenticate(String password){
+    //System.out.println("authenticated");
+    return password.equals(this.password);
     }
-    return balance > amount;
+  public boolean transferTo(BankAccount other, double amount, String password){
+    return (authenticate(password) && withdraw(amount) && other.deposit(amount));
   }
 }
